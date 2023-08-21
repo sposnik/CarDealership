@@ -2,10 +2,12 @@ package pl.zajavka.managment;
 
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.stereotype.Service;
 import pl.zajavka.DAO.CarDealershipManagementDAO;
 
 import java.util.List;
 
+@Service
 @AllArgsConstructor
 public class CarDealershipManagement {
 

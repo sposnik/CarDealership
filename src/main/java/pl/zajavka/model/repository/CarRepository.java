@@ -3,6 +3,7 @@ package pl.zajavka.model.repository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 import pl.zajavka.DAO.CarDAO;
 import pl.zajavka.model.configuration.HibernateUtil;
 import pl.zajavka.model.entities.*;
@@ -13,6 +14,7 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Slf4j
+@Repository
 public class CarRepository implements CarDAO {
 
     @Override

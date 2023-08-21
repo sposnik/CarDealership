@@ -1,6 +1,7 @@
 package pl.zajavka.managment;
 
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 import pl.zajavka.DAO.CarServiceManagementDAO;
 import pl.zajavka.DAO.CarServiceRequestDAO;
 import pl.zajavka.model.entities.CarServiceRequestEntity;
@@ -11,6 +12,7 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
 
+@Service
 @AllArgsConstructor
 public class CarServiceRequestService {
 

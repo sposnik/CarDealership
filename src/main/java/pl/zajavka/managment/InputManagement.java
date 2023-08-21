@@ -1,5 +1,7 @@
 package pl.zajavka.managment;
 
+import lombok.experimental.UtilityClass;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -9,6 +11,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+@UtilityClass
 public class InputManagement {
 
     private static final String FILE_PATH = "./src/main/resources/car-dealership-traffic-simulation.md";
@@ -77,7 +80,5 @@ public class InputManagement {
                 .flatMap((entry -> entry.getValue().stream().map(mapper)))
                 .toList();
     }
-
-
 
 }

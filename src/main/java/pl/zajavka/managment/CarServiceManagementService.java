@@ -1,6 +1,7 @@
 package pl.zajavka.managment;
 
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 import pl.zajavka.DAO.CarServiceManagementDAO;
 import pl.zajavka.model.entities.*;
 import pl.zajavka.records.CarServiceManagement;
@@ -11,6 +12,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
+@Service
 @AllArgsConstructor
 public class CarServiceManagementService {
 

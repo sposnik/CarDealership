@@ -1,6 +1,7 @@
 package pl.zajavka.model.repository;
 
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 import pl.zajavka.DAO.PartDAO;
 import pl.zajavka.model.configuration.HibernateUtil;
 import pl.zajavka.model.entities.MechanicEntity;
@@ -9,6 +10,7 @@ import pl.zajavka.model.entities.PartEntity;
 import java.util.Objects;
 import java.util.Optional;
 
+@Repository
 public class PartRepository implements PartDAO {
     @Override
     public Optional<PartEntity> findBySerialNumber(String serialNumber) {

@@ -1,6 +1,7 @@
 package pl.zajavka.managment;
 
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 import pl.zajavka.model.entities.CarToBuyEntity;
 import pl.zajavka.model.entities.CustomerEntity;
 import pl.zajavka.model.entities.InvoiceEntity;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+@Service
 @AllArgsConstructor
 public class CarPurchaseService {
 

@@ -1,6 +1,7 @@
 package pl.zajavka.model.repository;
 
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 import pl.zajavka.DAO.CarServiceManagementDAO;
 import pl.zajavka.model.configuration.HibernateUtil;
 import pl.zajavka.model.entities.CarServiceRequestEntity;
@@ -9,6 +10,7 @@ import pl.zajavka.model.entities.ServicePartEntity;
 
 import java.util.Objects;
 
+@Repository
 public class CarServiceManagementRepository implements CarServiceManagementDAO {
 
 

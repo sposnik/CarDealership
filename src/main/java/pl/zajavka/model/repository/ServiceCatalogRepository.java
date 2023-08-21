@@ -1,6 +1,7 @@
 package pl.zajavka.model.repository;
 
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 import pl.zajavka.DAO.ServiceDAO;
 import pl.zajavka.model.configuration.HibernateUtil;
 import pl.zajavka.model.entities.SalesmanEntity;
@@ -9,6 +10,7 @@ import pl.zajavka.model.entities.ServiceEntity;
 import java.util.Objects;
 import java.util.Optional;
 
+@Repository
 public class ServiceCatalogRepository implements ServiceDAO {
     @Override
     public Optional<ServiceEntity> findServiceByServiceCode(String serviceCode) {

@@ -1,5 +1,6 @@
 package pl.zajavka.managment;
 
+import org.springframework.stereotype.Service;
 import pl.zajavka.model.entities.*;
 
 import java.io.IOException;
@@ -8,6 +9,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+@Service
 public class DataPrepareService {
 
     public static List<List<?>> listsToPersist() throws IOException {

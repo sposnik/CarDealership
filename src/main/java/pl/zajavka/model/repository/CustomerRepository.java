@@ -2,6 +2,7 @@ package pl.zajavka.model.repository;
 
 import lombok.AllArgsConstructor;
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 import pl.zajavka.DAO.CustomerDAO;
 import pl.zajavka.model.configuration.HibernateUtil;
 import pl.zajavka.model.entities.CustomerEntity;
@@ -9,6 +10,7 @@ import pl.zajavka.model.entities.CustomerEntity;
 import java.util.Objects;
 import java.util.Optional;
 
+@Repository
 public class CustomerRepository implements CustomerDAO {
 
     @Override

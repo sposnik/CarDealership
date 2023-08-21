@@ -1,11 +1,13 @@
 package pl.zajavka.managment;
 
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 import pl.zajavka.DAO.SalesmanDAO;
 import pl.zajavka.model.entities.SalesmanEntity;
 
 import java.util.Optional;
 
+@Service
 @AllArgsConstructor
 public class SalesmanService {
 

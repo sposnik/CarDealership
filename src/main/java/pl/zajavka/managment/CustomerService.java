@@ -1,12 +1,14 @@
 package pl.zajavka.managment;
 
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 import pl.zajavka.DAO.CustomerDAO;
 import pl.zajavka.model.entities.CarServiceRequestEntity;
 import pl.zajavka.model.entities.CustomerEntity;
 
 import java.util.Optional;
 
+@Service
 @AllArgsConstructor
 public class CustomerService {
 
