@@ -35,5 +35,5 @@ public class ServiceMechanicEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "service_id")
-    private ServiceEntity service;
+    private ServiceCatalogEntity service;
 }

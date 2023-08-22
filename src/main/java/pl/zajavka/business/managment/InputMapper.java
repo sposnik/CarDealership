@@ -37,8 +37,8 @@ public class InputMapper {
                 .build();
     }
 
-    public static ServiceEntity serviceMapper(List<String> data) {
-        return ServiceEntity.builder()
+    public static ServiceCatalogEntity serviceMapper(List<String> data) {
+        return ServiceCatalogEntity.builder()
                 .serviceCode(data.get(0))
                 .description(data.get(1))
                 .price(new BigDecimal(data.get(2)))

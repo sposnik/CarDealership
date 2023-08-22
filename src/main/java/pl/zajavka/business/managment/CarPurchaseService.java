@@ -42,10 +42,11 @@ public class CarPurchaseService {
     }
 
     private CustomerEntity firstTimeCustomerMapper(Map<String, List<String>> stringListMap) {
-        SalesmanEntity salesman
-                = salesmanService.findSalesman(stringListMap.get(Keys.Entity.SALESMAN.toString()).get(0));
         CarToBuyEntity carToBuy
                 = carService.findCarToBuy(stringListMap.get(Keys.Entity.CAR.toString()).get(0));
+        SalesmanEntity salesman
+                = salesmanService.findSalesman(stringListMap.get(Keys.Entity.SALESMAN.toString()).get(0));
+
         InvoiceEntity invoice = buildInvoice(carToBuy, salesman);
 
         return dataPrepareService.buildCustomer(stringListMap.get(Keys.Entity.CUSTOMER.toString()), invoice);

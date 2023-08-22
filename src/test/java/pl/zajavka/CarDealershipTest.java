@@ -13,6 +13,10 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import pl.zajavka.business.managment.*;
 import pl.zajavka.infrastructure.configuration.ApplicationConfig;
 import pl.zajavka.infrastructure.entities.CarToBuyEntity;
+import pl.zajavka.infrastructure.repository.jpaRepositories.CarServiceRequestJpaRepository;
+import pl.zajavka.infrastructure.repository.jpaRepositories.InvoiceJpaRepository;
+import pl.zajavka.infrastructure.repository.jpaRepositories.ServiceMechanicJpaRepository;
+import pl.zajavka.infrastructure.repository.jpaRepositories.ServicePartJpaRepository;
 
 
 @Slf4j
@@ -25,12 +29,6 @@ public class CarDealershipTest {
     @Container
     static PostgreSQLContainer<?> postgreSQL = new PostgreSQLContainer<>("postgres:15.0");
 
-    private CarDealershipManagement carDealershipManagement;
-    private CarPurchaseService carPurchaseService;
-    private CarServiceRequestService carServiceRequestService;
-    private CarServiceManagementService carServiceManagementService;
-    private CarService carService;
-
 
     @DynamicPropertySource
     static void postgreSQLProperties(DynamicPropertyRegistry registry) {
@@ -38,7 +36,15 @@ public class CarDealershipTest {
         registry.add("jdbc.user", postgreSQL::getUsername);
         registry.add("jdbc.pass", postgreSQL::getPassword);
     }
+    private CarPurchaseService carPurchaseService;
+    private CarServiceRequestService carServiceRequestService;
+    private CarServiceManagementService carServiceManagementService;
+    private CarService carService;
 
+    private final InvoiceJpaRepository invoiceJpaRepository;
+    private final CarServiceRequestJpaRepository carServiceRequestJpaRepository;
+    private final ServiceMechanicJpaRepository serviceMechanicJpaRepository;
+    private final ServicePartJpaRepository servicePartJpaRepository;
     @Test
     @Order(1)
     void clear() {

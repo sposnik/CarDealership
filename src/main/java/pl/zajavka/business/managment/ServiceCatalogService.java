@@ -2,8 +2,8 @@ package pl.zajavka.business.managment;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.zajavka.business.DAO.ServiceDAO;
-import pl.zajavka.infrastructure.entities.ServiceEntity;
+import pl.zajavka.business.DAO.ServiceCatalogDAO;
+import pl.zajavka.infrastructure.entities.ServiceCatalogEntity;
 
 import java.util.Optional;
 
@@ -11,10 +11,10 @@ import java.util.Optional;
 @AllArgsConstructor
 public class ServiceCatalogService {
 
-    private ServiceDAO serviceDAO;
+    private ServiceCatalogDAO serviceCatalogDAO;
 
-    public ServiceEntity findService(String serviceCode) {
-        Optional<ServiceEntity> service = serviceDAO.findServiceByServiceCode(serviceCode);
+    public ServiceCatalogEntity findService(String serviceCode) {
+        Optional<ServiceCatalogEntity> service = serviceCatalogDAO.findServiceByServiceCode(serviceCode);
         if (service.isEmpty()) {
             throw new RuntimeException("Could not find service by service code: [%s]".formatted(serviceCode));
         }

@@ -1,19 +1,24 @@
 package pl.zajavka.infrastructure.repository;
 
-import org.hibernate.Session;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import pl.zajavka.business.DAO.CustomerDAO;
-import pl.zajavka.infrastructure.configuration.HibernateUtil;
 import pl.zajavka.infrastructure.entities.CustomerEntity;
 import pl.zajavka.infrastructure.repository.jpaRepositories.CustomerJpaRepository;
+import pl.zajavka.infrastructure.repository.jpaRepositories.InvoiceJpaRepository;
 
 import java.util.Objects;
 import java.util.Optional;
 
 @Repository
+@AllArgsConstructor
 public class CustomerRepository implements CustomerDAO {
 
     private CustomerJpaRepository customerJpaRepository;
+
+    private InvoiceJpaRepository invoiceJpaRepository;
 
     @Override
     public void saveCustomer(CustomerEntity customer) {
@@ -28,24 +33,14 @@ public class CustomerRepository implements CustomerDAO {
 
     @Override
     public void issueInvoice(CustomerEntity customer) {
-        try (Session session = HibernateUtil.getSession()) {
-            if (Objects.isNull(session)) {
-                throw new RuntimeException("Session is null");
-            }
-            session.beginTransaction();
 
-            if (Objects.isNull(customer.getCustomerId())) {
-                session.persist(customer);
-            }
+                customerJpaRepository.saveAndFlush(customer);
 
             customer.getInvoices().stream()
                     .filter(invoice -> Objects.isNull(invoice.getInvoiceId()))
                     .forEach(invoice -> {
                         invoice.setCustomer(customer);
-                        session.persist(invoice);
+                        invoiceJpaRepository.saveAndFlush(invoice);
                     });
-
-            session.getTransaction().commit();
-        }
     }
 }

@@ -44,7 +44,7 @@ public class CarServiceManagementService {
         PartEntity partEntity = partService.findPart(carServiceManagement.getPartSerialNumber()).orElse(null);
         CarServiceRequestEntity carServiceRequest
                 = carServiceRequestService.findActiveRequest(carServiceManagement.getCarVin());
-        ServiceEntity service = serviceCatalogService.findService(carServiceManagement.getServiceCode());
+        ServiceCatalogEntity service = serviceCatalogService.findService(carServiceManagement.getServiceCode());
         ServiceMechanicEntity serviceMechanicEntity
                 = buildServiceMechanicEntity(carServiceManagement, mechanicEntity, carServiceRequest, service);
 
@@ -80,7 +80,7 @@ public class CarServiceManagementService {
             CarServiceManagement request,
             MechanicEntity mechanic,
             CarServiceRequestEntity serviceRequest,
-            ServiceEntity service
+            ServiceCatalogEntity service
     ) {
         return ServiceMechanicEntity.builder()
                 .hours(request.getHours())

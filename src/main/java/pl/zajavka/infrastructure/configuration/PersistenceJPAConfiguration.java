@@ -20,7 +20,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import pl.zajavka.infrastructure.entities.EntityMarker;
-import pl.zajavka.infrastructure.repository.JpaRepositoriesMarker;
+import pl.zajavka.infrastructure.repository.jpaRepositories.JpaRepositoriesMarker;
 
 import javax.sql.DataSource;
 import java.util.Objects;

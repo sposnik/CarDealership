@@ -1,31 +1,23 @@
 package pl.zajavka.infrastructure.repository;
 
-import org.hibernate.Session;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import pl.zajavka.business.DAO.SalesmanDAO;
-import pl.zajavka.infrastructure.configuration.HibernateUtil;
 import pl.zajavka.infrastructure.entities.SalesmanEntity;
+import pl.zajavka.infrastructure.repository.jpaRepositories.SalesmanJpaRepository;
 
-import java.util.Objects;
 import java.util.Optional;
 
 @Repository
+@AllArgsConstructor
 public class SalesmanRepository implements SalesmanDAO {
+
+    @Autowired
+    private SalesmanJpaRepository salesmanJpaRepository;
+
     @Override
     public Optional<SalesmanEntity> findByPesel(String pesel) {
-        try (Session session = HibernateUtil.getSession()) {
-            if (Objects.isNull(session)) {
-                throw new RuntimeException("Session is null");
-            }
-            session.beginTransaction();
-
-            String query = "SELECT se FROM SalesmanEntity se WHERE se.pesel = :pesel";
-            Optional<SalesmanEntity> result = session.createQuery(query, SalesmanEntity.class)
-                    .setParameter("pesel", pesel)
-                    .uniqueResultOptional();
-
-            session.getTransaction().commit();
-            return result;
-        }
+        return salesmanJpaRepository.findByPesel(pesel);
     }
 }

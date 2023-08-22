@@ -3,8 +3,10 @@ package pl.zajavka;
 import lombok.SneakyThrows;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import pl.zajavka.business.DAO.CarToBuyDAO;
 import pl.zajavka.business.managment.*;
 import pl.zajavka.infrastructure.configuration.ApplicationConfig;
+import pl.zajavka.infrastructure.repository.CarToBuyRepository;
 
 public class Main {
 
@@ -13,15 +15,15 @@ public class Main {
         ApplicationContext context
                 = new AnnotationConfigApplicationContext(ApplicationConfig.class);
 
-        CarDealershipManagement carDealershipManagement = context.getBean(CarDealershipManagement.class);
+//        CarDealershipManagement carDealershipManagement = context.getBean(CarDealershipManagement.class);
         CarPurchaseService carPurchaseService = context.getBean(CarPurchaseService.class);
         CarServiceRequestService carServiceRequestService = context.getBean(CarServiceRequestService.class);
         CarServiceManagementService carServiceManagementService = context.getBean(CarServiceManagementService.class);
         CarService carService = context.getBean(CarService.class);
-
-        carDealershipManagement.clear();
-
-        carDealershipManagement.saveAll();
+//
+//        carDealershipManagement.clear();
+//
+//        carDealershipManagement.saveAll();
 
         carPurchaseService.createPurchase();
 

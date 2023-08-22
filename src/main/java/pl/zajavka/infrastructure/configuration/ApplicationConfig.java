@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Import;
 import pl.zajavka.ApplicationConfigMarker;
 
 @Configuration
-@ComponentScan(basePackageClasses = ApplicationConfigMarker.class)
+@ComponentScan(basePackages = "pl.zajavka")
 @Import(PersistenceJPAConfiguration.class)
 public class ApplicationConfig {
 }

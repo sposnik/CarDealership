@@ -15,7 +15,7 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ServiceEntity {
+public class ServiceCatalogEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

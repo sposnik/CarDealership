@@ -11,21 +11,21 @@ import java.util.Set;
 
 @Service
 public class DataPrepareService {
-
-    public static List<List<?>> listsToPersist() throws IOException {
-        List<SalesmanEntity> salesmen = InputManagement.listOfData(
-                InputManagement.getInitialInputData(), Keys.Entity.SALESMAN, InputMapper::salesmanMapper);
-        List<MechanicEntity> mechanics = InputManagement.listOfData(
-                InputManagement.getInitialInputData(), Keys.Entity.MECHANIC, InputMapper::mechanicMapper);
-        List<PartEntity> parts = InputManagement.listOfData(
-                InputManagement.getInitialInputData(), Keys.Entity.PART, InputMapper::partMapper);
-        List<CarToBuyEntity> carsToBuy = InputManagement.listOfData(
-                InputManagement.getInitialInputData(), Keys.Entity.CAR, InputMapper::carToBuyMapper);
-        List<ServiceEntity> services = InputManagement.listOfData(
-                InputManagement.getInitialInputData(), Keys.Entity.SERVICE, InputMapper::serviceMapper);
-        return List.of(salesmen, mechanics, carsToBuy, parts, services);
-    }
-
+//
+//    public static List<List<?>> listsToPersist() throws IOException {
+//        List<SalesmanEntity> salesmen = InputManagement.listOfData(
+//                InputManagement.getInitialInputData(), Keys.Entity.SALESMAN, InputMapper::salesmanMapper);
+//        List<MechanicEntity> mechanics = InputManagement.listOfData(
+//                InputManagement.getInitialInputData(), Keys.Entity.MECHANIC, InputMapper::mechanicMapper);
+//        List<PartEntity> parts = InputManagement.listOfData(
+//                InputManagement.getInitialInputData(), Keys.Entity.PART, InputMapper::partMapper);
+//        List<CarToBuyEntity> carsToBuy = InputManagement.listOfData(
+//                InputManagement.getInitialInputData(), Keys.Entity.CAR, InputMapper::carToBuyMapper);
+//        List<ServiceCatalogEntity> services = InputManagement.listOfData(
+//                InputManagement.getInitialInputData(), Keys.Entity.SERVICE, InputMapper::serviceMapper);
+//        return List.of(salesmen, mechanics, carsToBuy, parts, services);
+//    }
+//
     public static List<Map<String, List<String>>> listOfFirstBuy() {
         try {
             return InputManagement.listOfData(
