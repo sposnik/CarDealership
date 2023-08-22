@@ -3,10 +3,8 @@ package pl.zajavka;
 import lombok.SneakyThrows;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import pl.zajavka.DAO.*;
-import pl.zajavka.managment.*;
-import pl.zajavka.model.configuration.ApplicationConfig;
-import pl.zajavka.model.repository.*;
+import pl.zajavka.business.managment.*;
+import pl.zajavka.infrastructure.configuration.ApplicationConfig;
 
 public class Main {
 
