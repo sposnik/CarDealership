@@ -10,13 +10,24 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import pl.zajavka.business.managment.*;
+import pl.zajavka.business.services.CarPurchaseService;
+import pl.zajavka.business.services.CarService;
+import pl.zajavka.business.services.CarServiceManagementService;
+import pl.zajavka.business.services.CarServiceRequestService;
 import pl.zajavka.infrastructure.configuration.ApplicationConfig;
-import pl.zajavka.infrastructure.entities.CarToBuyEntity;
+import pl.zajavka.infrastructure.entities.CarServiceRequestEntity;
+import pl.zajavka.infrastructure.entities.ServiceMechanicEntity;
+import pl.zajavka.infrastructure.entities.ServicePartEntity;
 import pl.zajavka.infrastructure.repository.jpaRepositories.CarServiceRequestJpaRepository;
 import pl.zajavka.infrastructure.repository.jpaRepositories.InvoiceJpaRepository;
 import pl.zajavka.infrastructure.repository.jpaRepositories.ServiceMechanicJpaRepository;
 import pl.zajavka.infrastructure.repository.jpaRepositories.ServicePartJpaRepository;
+import pl.zajavka.model.CarToBuy;
+
+import java.util.List;
+import java.util.Objects;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @Slf4j
@@ -28,7 +39,14 @@ public class CarDealershipTest {
 
     @Container
     static PostgreSQLContainer<?> postgreSQL = new PostgreSQLContainer<>("postgres:15.0");
-
+    private final InvoiceJpaRepository invoiceJpaRepository;
+    private final CarServiceRequestJpaRepository carServiceRequestJpaRepository;
+    private final ServiceMechanicJpaRepository serviceMechanicJpaRepository;
+    private final ServicePartJpaRepository servicePartJpaRepository;
+    private CarPurchaseService carPurchaseService;
+    private CarServiceRequestService carServiceRequestService;
+    private CarServiceManagementService carServiceManagementService;
+    private CarService carService;
 
     @DynamicPropertySource
     static void postgreSQLProperties(DynamicPropertyRegistry registry) {
@@ -36,52 +54,30 @@ public class CarDealershipTest {
         registry.add("jdbc.user", postgreSQL::getUsername);
         registry.add("jdbc.pass", postgreSQL::getPassword);
     }
-    private CarPurchaseService carPurchaseService;
-    private CarServiceRequestService carServiceRequestService;
-    private CarServiceManagementService carServiceManagementService;
-    private CarService carService;
 
-    private final InvoiceJpaRepository invoiceJpaRepository;
-    private final CarServiceRequestJpaRepository carServiceRequestJpaRepository;
-    private final ServiceMechanicJpaRepository serviceMechanicJpaRepository;
-    private final ServicePartJpaRepository servicePartJpaRepository;
     @Test
     @Order(1)
-    void clear() {
-        log.info("##### TEST CLEAR");
-//        carDealershipManagement.clear();
-    }
-
-    @Test
-    @Order(2)
-    void saveData() {
-        log.info("##### TEST SAVE ALL");
-//        carDealershipManagement.saveAll();
-    }
-
-    @Test
-    @Order(3)
     void purchase() {
         log.info("##### CREATE PURCHASE");
         carPurchaseService.createPurchase();
     }
 
     @Test
-    @Order(4)
+    @Order(2)
     void request() {
         log.info("##### CREATE CAR REQUEST");
         carServiceRequestService.createServiceCarRequests();
     }
 
     @Test
-    @Order(5)
+    @Order(3)
     void process() {
         log.info("##### PROCESS REQUEST");
         carServiceManagementService.processService();
     }
 
     @Test
-    @Order(6)
+    @Order(4)
     void history() {
         log.info("##### CREATE CAR HISTORY");
         carService.showCarHistory("2C3CDYAG2DH731952");
@@ -89,17 +85,24 @@ public class CarDealershipTest {
     }
 
     @Test
-    @Order(7)
+    @Order(5)
     void verify() {
         log.info("##### VERIFY");
-        CarToBuyEntity car = carService.findCarToBuy("1FT7X2B60FEA74019");
+        CarToBuy car = carService.findCarToBuy("1FT7X2B60FEA74019");
         Assertions.assertEquals("Series 1", car.getModel());
         Assertions.assertEquals("BMW", car.getBrand());
+        invoiceJpaRepository.findAll();
+        assertEquals(6, invoiceJpaRepository.findAll().size());
+
+        List<CarServiceRequestEntity> allServiceRequests = carServiceRequestJpaRepository.findAll();
+        assertEquals(3, allServiceRequests.size());
+        assertEquals(2, allServiceRequests.stream().filter(sr -> Objects.nonNull(sr.getCompletedDateTime())).count());
+
+        List<ServiceMechanicEntity> allServiceMechanics = serviceMechanicJpaRepository.findAll();
+        assertEquals(5, allServiceMechanics.size());
+
+        List<ServicePartEntity> allServiceParts = servicePartJpaRepository.findAll();
+        assertEquals(4, allServiceParts.size());
     }
-
-
-
-
-
 
 }

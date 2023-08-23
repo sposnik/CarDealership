@@ -24,7 +24,7 @@ public interface CarToServiceJpaRepository extends JpaRepository<CarToServiceEnt
             attributePaths = {
                     "carServiceRequests",
                     "carServiceRequests.serviceMechanics",
-                    "carServiceRequests.serviceMechanics.service",
+                    "carServiceRequests.serviceMechanics.serviceCatalog",
                     "carServiceRequests.serviceParts",
                     "carServiceRequests.serviceParts.part"
             }

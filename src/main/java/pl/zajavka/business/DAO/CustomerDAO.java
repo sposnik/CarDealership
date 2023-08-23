@@ -1,15 +1,14 @@
 package pl.zajavka.business.DAO;
 
-import pl.zajavka.infrastructure.entities.CustomerEntity;
+import pl.zajavka.model.Customer;
 
 import java.util.Optional;
 
 public interface CustomerDAO {
 
+    Customer saveCustomer(Customer customer);
 
-    void saveCustomer(CustomerEntity customer);
+    Optional<Customer> findByEmail(String email);
 
-    Optional<CustomerEntity> findByEmail(String email);
-
-    void issueInvoice(CustomerEntity customer);
+    void issueInvoice(Customer customer);
 }

@@ -14,6 +14,6 @@ public class ServiceMechanic {
     String comment;
     CarServiceRequest carServiceRequest;
     Mechanic mechanic;
-    Service service;
+    ServiceCatalog serviceCatalog;
 
 }

@@ -1,11 +1,11 @@
 package pl.zajavka.business.DAO;
 
-import pl.zajavka.infrastructure.entities.CarServiceRequestEntity;
+import pl.zajavka.model.CarServiceRequest;
 
 import java.util.Optional;
 
 public interface CarServiceRequestDAO {
-    void createServiceRequest(CarServiceRequestEntity carServiceRequestEntity);
+    void createServiceRequest(CarServiceRequest carServiceRequest);
 
-    Optional<CarServiceRequestEntity> findRequestByVin(String carVin);
+    Optional<CarServiceRequest> findRequestByVin(String carVin);
 }

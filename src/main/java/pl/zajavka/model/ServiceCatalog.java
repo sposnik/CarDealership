@@ -10,7 +10,7 @@ import java.util.Set;
 @Builder
 @EqualsAndHashCode(of = "serviceCode")
 @ToString(of = {"serviceId", "serviceCode", "description", "price"})
-public class Service {
+public class ServiceCatalog {
 
     Integer serviceId;
     String serviceCode;

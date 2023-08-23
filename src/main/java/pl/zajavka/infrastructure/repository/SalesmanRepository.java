@@ -4,8 +4,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import pl.zajavka.business.DAO.SalesmanDAO;
-import pl.zajavka.infrastructure.entities.SalesmanEntity;
 import pl.zajavka.infrastructure.repository.jpaRepositories.SalesmanJpaRepository;
+import pl.zajavka.infrastructure.repository.mapper.SalesmanEntityMapper;
+import pl.zajavka.model.Salesman;
 
 import java.util.Optional;
 
@@ -13,11 +14,13 @@ import java.util.Optional;
 @AllArgsConstructor
 public class SalesmanRepository implements SalesmanDAO {
 
-    @Autowired
     private SalesmanJpaRepository salesmanJpaRepository;
 
+    private SalesmanEntityMapper salesmanEntityMapper;
+
     @Override
-    public Optional<SalesmanEntity> findByPesel(String pesel) {
-        return salesmanJpaRepository.findByPesel(pesel);
+    public Optional<Salesman> findByPesel(String pesel) {
+        return salesmanJpaRepository.findByPesel(pesel)
+                .map(salesmanEntityMapper::mapFromEntity);
     }
 }

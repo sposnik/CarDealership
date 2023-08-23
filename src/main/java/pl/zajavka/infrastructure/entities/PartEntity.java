@@ -32,6 +32,6 @@ public class PartEntity {
     @Column(name = "price", nullable = false)
     private BigDecimal price;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "part")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "part")
     private Set<ServicePartEntity> serviceParts;
 }

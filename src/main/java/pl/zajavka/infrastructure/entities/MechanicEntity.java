@@ -31,6 +31,6 @@ public class MechanicEntity {
     @Column(name = "pesel", nullable = false)
     private String pesel;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "mechanic")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "mechanic")
     private Set<ServiceMechanicEntity> serviceMechanics;
 }

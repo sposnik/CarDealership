@@ -1,11 +1,11 @@
 package pl.zajavka.infrastructure.repository;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import pl.zajavka.business.DAO.CarToBuyDAO;
-import pl.zajavka.infrastructure.entities.CarToBuyEntity;
 import pl.zajavka.infrastructure.repository.jpaRepositories.CarToBuyJpaRepository;
+import pl.zajavka.infrastructure.repository.mapper.CarToBuyEntityMapper;
+import pl.zajavka.model.CarToBuy;
 
 import java.util.Optional;
 
@@ -13,10 +13,13 @@ import java.util.Optional;
 @AllArgsConstructor
 public class CarToBuyRepository implements CarToBuyDAO {
 
-
     private CarToBuyJpaRepository carToBuyJpaRepository;
+
+    private CarToBuyEntityMapper carToBuyEntityMapper;
+
     @Override
-    public Optional<CarToBuyEntity> findCarToBuyByVin(String vin) {
-        return carToBuyJpaRepository.findCarToBuyByVin(vin);
+    public Optional<CarToBuy> findCarToBuyByVin(String vin) {
+        return carToBuyJpaRepository.findCarToBuyByVin(vin)
+                .map(carToBuyEntityMapper::mapFromEntity);
     }
 }

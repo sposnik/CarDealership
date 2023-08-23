@@ -1,9 +1,9 @@
 package pl.zajavka.business.DAO;
 
-import pl.zajavka.infrastructure.entities.ServiceCatalogEntity;
+import pl.zajavka.model.ServiceCatalog;
 
 import java.util.Optional;
 
 public interface ServiceCatalogDAO {
-    Optional<ServiceCatalogEntity> findServiceByServiceCode(String serviceCode);
+    Optional<ServiceCatalog> findServiceByServiceCode(String serviceCode);
 }

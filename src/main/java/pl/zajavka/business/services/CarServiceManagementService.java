@@ -1,10 +1,10 @@
-package pl.zajavka.business.managment;
+package pl.zajavka.business.services;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.zajavka.business.DAO.CarServiceManagementDAO;
-import pl.zajavka.infrastructure.entities.*;
-import pl.zajavka.model.CarServiceManagement;
+import pl.zajavka.business.services.utils.Keys;
+import pl.zajavka.model.*;
 
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -38,26 +38,28 @@ public class CarServiceManagementService {
         listOfServiceManagements.forEach(this::saveManagment);
     }
 
+    // DWA RAZY PART !!!!!!!!!!!!!
     private void saveManagment(CarServiceManagement carServiceManagement) {
-        CarToServiceEntity carToServiceEntity = carService.findCarToService(carServiceManagement.getCarVin()).orElseThrow();
-        MechanicEntity mechanicEntity = mechanicService.findMechanic(carServiceManagement.getMechanicPesel());
-        PartEntity partEntity = partService.findPart(carServiceManagement.getPartSerialNumber()).orElse(null);
-        CarServiceRequestEntity carServiceRequest
+        CarToService carToService = carService.findCarToService(carServiceManagement.getCarVin()).orElseThrow();
+        Mechanic mechanic = mechanicService.findMechanic(carServiceManagement.getMechanicPesel());
+    //    Part part = partService.findPart(carServiceManagement.getPartSerialNumber()).orElse(null);
+        CarServiceRequest carServiceRequest
                 = carServiceRequestService.findActiveRequest(carServiceManagement.getCarVin());
-        ServiceCatalogEntity service = serviceCatalogService.findService(carServiceManagement.getServiceCode());
-        ServiceMechanicEntity serviceMechanicEntity
-                = buildServiceMechanicEntity(carServiceManagement, mechanicEntity, carServiceRequest, service);
+        ServiceCatalog service = serviceCatalogService.findService(carServiceManagement.getServiceCode());
+        ServiceMechanic serviceMechanic
+                = buildServiceMechanic(carServiceManagement, mechanic, carServiceRequest, service);
 
 
         if (Keys.Properties.FINISHED.toString().equals(carServiceManagement.getDone())) {
-            carServiceRequest.setCompletedDateTime(OffsetDateTime.now());
+            carServiceRequest = carServiceRequest.withCompletedDateTime(OffsetDateTime.now());
+//            carServiceRequest.setCompletedDateTime(OffsetDateTime.now());
         }
         if (Objects.isNull(carServiceManagement.getPartSerialNumber()) || Objects.isNull(carServiceManagement.getPartQuantity())) {
-            carServiceManagementDAO.manage(carServiceRequest, serviceMechanicEntity);
+            carServiceManagementDAO.manage(carServiceRequest, serviceMechanic);
         } else {
-            PartEntity part = partService.findPart(carServiceManagement.getPartSerialNumber()).orElseThrow();
-            ServicePartEntity servicePartEntity = buildServicePartEntity(carServiceManagement, carServiceRequest, part);
-            carServiceManagementDAO.manage(carServiceRequest, serviceMechanicEntity, servicePartEntity);
+            Part part = partService.findPart(carServiceManagement.getPartSerialNumber()).orElseThrow();
+            ServicePart servicePart = buildServicePart(carServiceManagement, carServiceRequest, part);
+            carServiceManagementDAO.manage(carServiceRequest, serviceMechanic, servicePart);
         }
 
     }
@@ -65,8 +67,8 @@ public class CarServiceManagementService {
     private CarServiceManagement createListOfManagements(Map<String, List<String>> input) {
         List<String> whats = input.get(Keys.Properties.WHAT.toString());
         return CarServiceManagement.builder()
-                .mechanicPesel(input.get(Keys.Entity.MECHANIC.toString()).get(0))
-                .carVin(input.get(Keys.Entity.CAR.toString()).get(0))
+                .mechanicPesel(input.get(Keys.Domains.MECHANIC.toString()).get(0))
+                .carVin(input.get(Keys.Domains.CAR.toString()).get(0))
                 .partSerialNumber(Optional.ofNullable(whats.get(0)).filter(value -> !value.isBlank()).orElse(null))
                 .partQuantity(Optional.ofNullable(whats.get(1)).filter(value -> !value.isBlank()).map(Integer::parseInt).orElse(null))
                 .serviceCode(whats.get(2))
@@ -76,27 +78,27 @@ public class CarServiceManagementService {
                 .build();
     }
 
-    private ServiceMechanicEntity buildServiceMechanicEntity(
+    private ServiceMechanic buildServiceMechanic(
             CarServiceManagement request,
-            MechanicEntity mechanic,
-            CarServiceRequestEntity serviceRequest,
-            ServiceCatalogEntity service
+            Mechanic mechanic,
+            CarServiceRequest serviceRequest,
+            ServiceCatalog serviceCatalog
     ) {
-        return ServiceMechanicEntity.builder()
+        return ServiceMechanic.builder()
                 .hours(request.getHours())
                 .comment(request.getComment())
                 .carServiceRequest(serviceRequest)
                 .mechanic(mechanic)
-                .service(service)
+                .serviceCatalog(serviceCatalog)
                 .build();
     }
 
-    private ServicePartEntity buildServicePartEntity(
+    private ServicePart buildServicePart(
             CarServiceManagement request,
-            CarServiceRequestEntity serviceRequest,
-            PartEntity part
+            CarServiceRequest serviceRequest,
+            Part part
     ) {
-        return ServicePartEntity.builder()
+        return ServicePart.builder()
                 .quantity(request.getPartQuantity())
                 .carServiceRequest(serviceRequest)
                 .part(part)

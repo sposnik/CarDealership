@@ -1,4 +1,4 @@
-package pl.zajavka.business.managment;
+package pl.zajavka.business.services.utils;
 
 import lombok.experimental.UtilityClass;
 
@@ -37,22 +37,6 @@ public class InputManagement {
         return inputData;
     }
 
-    public static Map<String, List<List<String>>> getInitialInputData() throws IOException {
-
-        return inputData
-                .stream()
-                .filter(line -> line.startsWith("INIT -> "))
-                .map(line -> line.split(" -> "))
-                .collect(
-                        Collectors.groupingBy(
-                                l -> Arrays.asList(l).get(1),
-                                Collectors.mapping(
-                                        l -> Arrays.stream(Arrays.asList(l).get(2).split(";")).toList(),
-                                        Collectors.toList()
-                                )
-                        )
-                );
-    }
     public static Map<String, List<List<String>>> getSimulationInputData() throws IOException {
 
         return inputData

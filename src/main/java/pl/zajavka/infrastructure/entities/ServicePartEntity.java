@@ -22,11 +22,11 @@ public class ServicePartEntity {
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_service_request_id")
     private CarServiceRequestEntity carServiceRequest;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "part_id")
     private PartEntity part;
 }

@@ -1,9 +1,9 @@
-package pl.zajavka.business.managment;
+package pl.zajavka.business.services;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.zajavka.business.DAO.MechanicDAO;
-import pl.zajavka.infrastructure.entities.MechanicEntity;
+import pl.zajavka.model.Mechanic;
 
 import java.util.Optional;
 
@@ -14,8 +14,8 @@ public class MechanicService {
     private MechanicDAO mechanicDAO;
 
 
-    public MechanicEntity findMechanic(String pesel) {
-        Optional<MechanicEntity> mechanic = mechanicDAO.findByPesel(pesel);
+    public Mechanic findMechanic(String pesel) {
+        Optional<Mechanic> mechanic = mechanicDAO.findByPesel(pesel);
         if (mechanic.isEmpty()) {
             throw new RuntimeException("Could not find mechanic by pesel: [%s]".formatted(pesel));
         }

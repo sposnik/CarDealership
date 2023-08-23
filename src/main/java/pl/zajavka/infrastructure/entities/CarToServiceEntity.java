@@ -12,7 +12,7 @@ import java.util.Set;
 @Table(name = "car_to_service")
 @Getter
 @Setter
-@EqualsAndHashCode(of = "carToServiceId")
+@EqualsAndHashCode(of = {"carToServiceId", "vin"})
 @ToString(of = {"carToServiceId", "vin", "brand", "model", "year"})
 @Builder
 @NoArgsConstructor

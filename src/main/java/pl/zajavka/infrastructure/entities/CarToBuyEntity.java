@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 @Table(name = "car_to_buy")
 @Getter
 @Setter
-@EqualsAndHashCode(of = "carToBuyId")
+@EqualsAndHashCode(of = {"carToBuyId", "vin"})
 @ToString(of = {"carToBuyId", "vin", "brand", "model", "year", "color", "price"})
 @Builder
 @NoArgsConstructor

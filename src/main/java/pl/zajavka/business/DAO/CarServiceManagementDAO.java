@@ -1,11 +1,11 @@
 package pl.zajavka.business.DAO;
 
-import pl.zajavka.infrastructure.entities.CarServiceRequestEntity;
-import pl.zajavka.infrastructure.entities.ServiceMechanicEntity;
-import pl.zajavka.infrastructure.entities.ServicePartEntity;
+import pl.zajavka.model.CarServiceRequest;
+import pl.zajavka.model.ServiceMechanic;
+import pl.zajavka.model.ServicePart;
 
 public interface CarServiceManagementDAO {
-    void manage(CarServiceRequestEntity carServiceRequest, ServiceMechanicEntity serviceMechanicEntity);
+    void manage(CarServiceRequest carServiceRequest, ServiceMechanic serviceMechanic);
 
-    void manage(CarServiceRequestEntity carServiceRequest, ServiceMechanicEntity serviceMechanicEntity, ServicePartEntity servicePartEntity);
+    void manage(CarServiceRequest carServiceRequest, ServiceMechanic serviceMechanic, ServicePart servicePart);
 }

@@ -20,9 +20,6 @@ public class CarToService {
     Set<CarServiceRequest> carServiceRequests;
 
     public boolean carBoughtHere() {
-        return Objects.nonNull(vin)
-            && Objects.isNull(brand)
-            && Objects.isNull(model)
-            && Objects.isNull(year);
+        return Objects.nonNull(vin) && Objects.isNull(brand) && Objects.isNull(model) && Objects.isNull(year);
     }
 }

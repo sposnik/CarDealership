@@ -1,13 +1,14 @@
-package pl.zajavka.business.managment;
+package pl.zajavka.business.services;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.zajavka.business.DAO.CarToBuyDAO;
 import pl.zajavka.business.DAO.CarToServiceDAO;
-import pl.zajavka.infrastructure.entities.CarToBuyEntity;
-import pl.zajavka.infrastructure.entities.CarToServiceEntity;
 import pl.zajavka.model.CarHistory;
+import pl.zajavka.model.CarToBuy;
+import pl.zajavka.model.CarToService;
 
 import java.util.Optional;
 
@@ -20,30 +21,32 @@ public class CarService {
 
     private CarToBuyDAO carToBuyDAO;
 
-    public CarToBuyEntity findCarToBuy(String vin) {
-        Optional<CarToBuyEntity> carToBuyByVin = carToBuyDAO.findCarToBuyByVin(vin);
+    public CarToBuy findCarToBuy(String vin) {
+        Optional<CarToBuy> carToBuyByVin = carToBuyDAO.findCarToBuyByVin(vin);
         if (carToBuyByVin.isEmpty()) {
             throw new RuntimeException("Could not find car by vin: [%s]".formatted(vin));
         }
         return carToBuyByVin.get();
     }
 
-    public Optional<CarToServiceEntity> findCarToService(String vin) {
+    public Optional<CarToService> findCarToService(String vin) {
         return carToServiceDAO.findCarToServiceByVin(vin);
     }
 
-    public void saveCarToService (CarToServiceEntity car){
-        carToServiceDAO.saveCarToService(car);
+    public CarToService saveCarToService(CarToService car) {
+        return carToServiceDAO.saveCarToService(car);
     }
 
-    public CarToServiceEntity copyCarFromBuyToService(CarToServiceEntity carToService) {
-        CarToBuyEntity carToBuy = findCarToBuy(carToService.getVin());
-        return CarToServiceEntity.builder()
+    @Transactional
+    public CarToService copyCarFromBuyToService(CarToService carToService) {
+        CarToBuy carToBuy = findCarToBuy(carToService.getVin());
+        CarToService newCarToService = CarToService.builder()
                 .vin(carToBuy.getVin())
                 .brand(carToBuy.getBrand())
                 .model(carToBuy.getModel())
                 .year(carToBuy.getYear())
                 .build();
+        return carToServiceDAO.saveCarToService(newCarToService);
     }
 
     public void showCarHistory(String vin) {
@@ -57,7 +60,4 @@ public class CarService {
         serviceRequest.services().forEach(service -> log.info("SERVICE ( [{}] ):", service));
         serviceRequest.parts().forEach(part -> log.info("PART ( [{}] ):", part));
     }
-
-
-
 }

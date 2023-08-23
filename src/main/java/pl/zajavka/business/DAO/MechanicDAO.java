@@ -1,11 +1,11 @@
 package pl.zajavka.business.DAO;
 
-import pl.zajavka.infrastructure.entities.MechanicEntity;
+import pl.zajavka.model.Mechanic;
 
 import java.util.Optional;
 
 public interface MechanicDAO {
 
-    Optional<MechanicEntity> findByPesel(String pesel);
+    Optional<Mechanic> findByPesel(String pesel);
 
 }

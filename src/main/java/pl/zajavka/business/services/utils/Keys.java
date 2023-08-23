@@ -1,8 +1,8 @@
-package pl.zajavka.business.managment;
+package pl.zajavka.business.services.utils;
 
 public interface Keys {
 
-    enum Entity implements Keys {
+    enum Domains implements Keys {
         SALESMAN,
         MECHANIC,
         PART,

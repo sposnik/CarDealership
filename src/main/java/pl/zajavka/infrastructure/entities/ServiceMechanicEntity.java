@@ -19,21 +19,21 @@ public class ServiceMechanicEntity {
     @Column(name = "service_mechanic_id")
     private Integer serviceMechanicId;
 
-    @Column(name = "hours", nullable = false)
+    @Column(name = "hours")
     private Integer hours;
 
-    @Column(name = "comment", nullable = false)
+    @Column(name = "comment")
     private String comment;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_service_request_id")
     private CarServiceRequestEntity carServiceRequest;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mechanic_id")
     private MechanicEntity mechanic;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "service_id")
-    private ServiceCatalogEntity service;
+    private ServiceCatalogEntity serviceCatalog;
 }

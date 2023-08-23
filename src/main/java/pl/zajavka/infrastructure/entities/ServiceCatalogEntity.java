@@ -31,7 +31,7 @@ public class ServiceCatalogEntity {
     @Column(name = "price", nullable = false)
     private BigDecimal price;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "service")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "serviceCatalog")
     private Set<ServiceMechanicEntity> serviceMechanics;
 
 }

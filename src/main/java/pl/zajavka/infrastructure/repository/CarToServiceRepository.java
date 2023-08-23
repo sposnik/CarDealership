@@ -6,7 +6,9 @@ import org.springframework.stereotype.Repository;
 import pl.zajavka.business.DAO.CarToServiceDAO;
 import pl.zajavka.infrastructure.entities.*;
 import pl.zajavka.infrastructure.repository.jpaRepositories.CarToServiceJpaRepository;
+import pl.zajavka.infrastructure.repository.mapper.CarToServiceEntityMapper;
 import pl.zajavka.model.CarHistory;
+import pl.zajavka.model.CarToService;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,16 +19,18 @@ import java.util.Optional;
 public class CarToServiceRepository implements CarToServiceDAO {
 
     private CarToServiceJpaRepository carToServiceJpaRepository;
-
+    private CarToServiceEntityMapper carToServiceEntityMapper;
 
     @Override
-    public Optional<CarToServiceEntity> findCarToServiceByVin(String vin) {
-        return carToServiceJpaRepository.findCarToServiceByVin(vin);
+    public Optional<CarToService> findCarToServiceByVin(String vin) {
+        return carToServiceJpaRepository.findCarToServiceByVin(vin)
+                .map(carToServiceEntityMapper::mapFromEntity);
     }
 
     @Override
-    public void saveCarToService(CarToServiceEntity car) {
-        carToServiceJpaRepository.saveAndFlush(car);
+    public CarToService saveCarToService(CarToService car) {
+        CarToServiceEntity saved = carToServiceJpaRepository.saveAndFlush(carToServiceEntityMapper.mapToEntity(car));
+        return carToServiceEntityMapper.mapFromEntity(saved);
     }
 
     @Override
@@ -53,7 +57,7 @@ public class CarToServiceRepository implements CarToServiceDAO {
                 .receivedDateTime(entity.getReceivedDateTime())
                 .completedDateTime(entity.getCompletedDateTime())
                 .customerComment(entity.getCustomerComment())
-                .services(mapServices(entity.getServiceMechanics().stream().map(ServiceMechanicEntity::getService).toList()))
+                .services(mapServices(entity.getServiceMechanics().stream().map(ServiceMechanicEntity::getServiceCatalog).toList()))
                 .parts(mapParts(entity.getServiceParts().stream().map(ServicePartEntity::getPart).toList()))
                 .build();
     }
@@ -77,6 +81,4 @@ public class CarToServiceRepository implements CarToServiceDAO {
                         .build())
                 .toList();
     }
-
-
 }
